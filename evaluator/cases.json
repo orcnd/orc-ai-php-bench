@@ -1,0 +1,5 @@
+[
+  {"id":"legacy-74","php":"7.4","phpstanVersion":70400},
+  {"id":"transition-80","php":"8.0","phpstanVersion":80000},
+  {"id":"modern-82","php":"8.2","phpstanVersion":80200}
+]

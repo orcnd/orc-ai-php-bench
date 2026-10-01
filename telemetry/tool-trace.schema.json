@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent tool trace event",
+  "type": "object",
+  "required": ["tool", "path", "tokens_returned"],
+  "properties": {
+    "tool": { "type": "string" },
+    "path": { "type": "string" },
+    "tokens_returned": { "type": "integer", "minimum": 0 },
+    "timestamp": { "type": "string" }
+  }
+}

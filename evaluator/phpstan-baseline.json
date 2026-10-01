@@ -1,0 +1,5 @@
+{
+  "known_error_count": 0,
+  "target_php_version": "7.4",
+  "policy": "Only errors above this baseline are scored."
+}
