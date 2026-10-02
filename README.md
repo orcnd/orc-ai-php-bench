@@ -1,6 +1,14 @@
 # ORC PHP benchmark
 
-The runnable benchmark is Trial 002. The root app and old PHP suites are
+Hardest: Trial 006 (`trial6/`, crash consistency) and Trial 005 (`trial5/`,
+persistence, concurrency, ADR precedence). Before those, Trial 004 (`trial4/`, see `trial4/README.md`):
+unit-level cancellations with planted spec divergences, month-end ledger
+atomicity, migrated orders, int64-overflow-sized wholesale orders, PHP 7.4
+runtime checks and mutation scoring of the agent's own regression tests.
+Trial 003 (`trial3/`) is the same task without the four hard requirements;
+Trial 002 below is the original, easiest task. Model results: `RESULTS.md`.
+
+The runnable benchmark was Trial 002. The root app and old PHP suites are
 legacy smoke fixtures and are excluded from the active score.
 
 Prepare a new workspace outside this repository:

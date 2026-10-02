@@ -1,0 +1,36 @@
+{
+  "id": "withdrawal-concurrency-v5",
+  "target_php": "7.4",
+  "groups": {
+    "public": 3,
+    "pricing": 7,
+    "refunds": 10,
+    "idempotency": 10,
+    "persistence": 10,
+    "concurrency": 15,
+    "withdrawal": 10,
+    "outbox": 10,
+    "scope": 5,
+    "runtime": 5,
+    "phpstan": 5,
+    "tests": 10
+  },
+  "protected_files": [
+    "app/Account/UserController.php",
+    "app/Account/NoteRepository.php",
+    "app/Mail/ReceiptFormatter.php",
+    "app/Reports/RefundReport.php",
+    "app/Ledger/Ledger.php",
+    "app/Ledger/LedgerClosedException.php",
+    "app/Storage/FileStore.php",
+    "app/Notifications/Outbox.php",
+    "composer.json",
+    "Dockerfile",
+    "docs/REFUNDS.md",
+    "docs/OPERATIONS.md",
+    "docs/README.md",
+    "docs/adr/0011-withdrawal-refunds-delivery.md",
+    "docs/adr/0012-pay-out-store-credit.md"
+  ],
+  "credit_policy": "As Trial 004. Concurrency runs real parallel PHP processes against the shared FileStore with simulated storage latency."
+}

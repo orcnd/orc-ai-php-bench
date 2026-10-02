@@ -1,0 +1,152 @@
+[
+ {
+  "id": "discount-base-includes-credit",
+  "file": "app/Pricing/DiscountCalculator.php",
+  "old": "if ($line->type === LineType::MERCH) {",
+  "new": "if ($line->type !== LineType::SHIPPING) {"
+ },
+ {
+  "id": "percent-floors",
+  "file": "app/Pricing/DiscountCalculator.php",
+  "old": "intdiv($base * $promotion->value + 50, 100)",
+  "new": "intdiv($base * $promotion->value, 100)"
+ },
+ {
+  "id": "fixed-uncapped",
+  "file": "app/Pricing/DiscountCalculator.php",
+  "old": "return min($promotion->value, $base);",
+  "new": "return $promotion->value;"
+ },
+ {
+  "id": "allocation-rounds-per-line",
+  "file": "app/Pricing/DiscountAllocator.php",
+  "old": "[$share, $remainder] = $total > 0 ? IntMath::mulDiv($amount, $weight, $total) : [0, 0];",
+  "new": "[$share, $remainder] = $total > 0 ? [(int) round($amount * $weight / $total), 0] : [0, 0];"
+ },
+ {
+  "id": "allocation-ties-last",
+  "file": "app/Pricing/DiscountAllocator.php",
+  "old": "return [$b[0], $a[1]] <=> [$a[0], $b[1]];",
+  "new": "return [$b[0], $b[1]] <=> [$a[0], $a[1]];"
+ },
+ {
+  "id": "snapshot-aliases-lines",
+  "file": "app/Checkout/CheckoutService.php",
+  "old": "$lines[$id] = clone $line;",
+  "new": "$lines[$id] = $line;"
+ },
+ {
+  "id": "snapshot-aliases-promotion",
+  "file": "app/Checkout/CheckoutService.php",
+  "old": "$promotion = clone $promotion;",
+  "new": ""
+ },
+ {
+  "id": "shipping-refunded",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "} elseif ($line->type === LineType::MERCH && isset($cancelled[$id])) {",
+  "new": "} elseif ($line->type !== LineType::CREDIT && isset($cancelled[$id])) {"
+ },
+ {
+  "id": "credit-only-when-listed",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "if ($line->type === LineType::CREDIT) {",
+  "new": "if ($line->type === LineType::CREDIT && isset($cancelled[$id])) {"
+ },
+ {
+  "id": "unknown-line-ignored",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "throw new \\InvalidArgumentException('Unknown line ' . $id);",
+  "new": "continue;"
+ },
+ {
+  "id": "zero-refund-ledgered",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "if ($amount > 0) {",
+  "new": "if ($amount >= 0) {"
+ },
+ {
+  "id": "allocation-overflows",
+  "file": "app/Pricing/DiscountAllocator.php",
+  "old": "[$share, $remainder] = $total > 0 ? IntMath::mulDiv($amount, $weight, $total) : [0, 0];",
+  "new": "[$share, $remainder] = $total > 0 ? [intdiv($amount * $weight, $total), ($amount * $weight) % $total] : [0, 0];"
+ },
+ {
+  "id": "units-rounded",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "intdiv($net * $cancelled[$id], $line->quantity)",
+  "new": "(int) round($net * $cancelled[$id] / $line->quantity)"
+ },
+ {
+  "id": "unit-count-ignored",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "$units = is_int($key) ? $remaining : $value;",
+  "new": "$units = $remaining;"
+ },
+ {
+  "id": "over-cancel-allowed",
+  "file": "app/Refunds/CancellationService.php",
+  "old": " || $units > $remaining",
+  "new": ""
+ },
+ {
+  "id": "recompute-allocations",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "$net = $line->total() - ($snapshot->allocations[$id] ?? 0);",
+  "new": "$net = $line->total() - (new \\App\\Pricing\\DiscountAllocator())->allocate($snapshot->discount, array_map(function ($l) { return $l->type === LineType::MERCH ? $l->total() : 0; }, $snapshot->lines))[$id];"
+ },
+ {
+  "id": "no-replay",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "if (isset($state['responses'][$requestId])) {\n                return $state['responses'][$requestId];\n            }",
+  "new": ""
+ },
+ {
+  "id": "no-order-lock",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "return $this->orders->transaction($orderId, function",
+  "new": "return $this->orders->transaction($orderId * 1000000 + mt_rand(0, 999999), function"
+ },
+ {
+  "id": "state-before-ledger",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "$amount = $this->entitlement($snapshot, $cancelled, $shippingRefunded) - $before;",
+  "new": "$amount = $this->entitlement($snapshot, $cancelled, $shippingRefunded) - $before;\n            $this->orders->saveCancellationState($orderId, ['units' => $cancelled] + $state);"
+ },
+ {
+  "id": "event-before-ledger",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "                $this->ledger->record($orderId, $requestId, $amount);\n                $this->outbox->publish(",
+  "new": "                $this->outbox->publish(\n                'refund.issued', ['order_id' => $orderId, 'request_id' => $requestId, 'refund_cents' => $amount]);\n                $this->ledger->record($orderId, $requestId, $amount);\n                (function (...$ignored) {})("
+ },
+ {
+  "id": "withdrawal-in-utc",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "$zone = new \\DateTimeZone(self::SHOP_TIMEZONE);",
+  "new": "$zone = new \\DateTimeZone('UTC');"
+ },
+ {
+  "id": "withdrawal-one-day-short",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "(self::WITHDRAWAL_DAYS + 1)",
+  "new": "self::WITHDRAWAL_DAYS"
+ },
+ {
+  "id": "delivery-on-partial",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "if (!$wasComplete && $this->fullyCancelled($snapshot, $cancelled) && $this->withinWithdrawal($snapshot)) {",
+  "new": "if ($this->withinWithdrawal($snapshot)) {"
+ },
+ {
+  "id": "delivery-never",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "$shippingRefunded = true;",
+  "new": "$shippingRefunded = false;"
+ },
+ {
+  "id": "credit-paid-out-on-withdrawal",
+  "file": "app/Refunds/CancellationService.php",
+  "old": "if ($line->type === LineType::CREDIT) {",
+  "new": "if ($line->type === LineType::CREDIT && !$shippingRefunded) {"
+ }
+]

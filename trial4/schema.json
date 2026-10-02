@@ -1,0 +1,30 @@
+{
+  "id": "unit-cancellation-v4",
+  "target_php": "7.4",
+  "groups": {
+    "public": 5,
+    "discount": 10,
+    "allocation": 10,
+    "partial": 10,
+    "units": 10,
+    "snapshot": 10,
+    "idempotency": 10,
+    "wholesale": 5,
+    "scope": 10,
+    "runtime": 5,
+    "phpstan": 5,
+    "tests": 10
+  },
+  "protected_files": [
+    "app/Account/UserController.php",
+    "app/Account/NoteRepository.php",
+    "app/Mail/ReceiptFormatter.php",
+    "app/Reports/RefundReport.php",
+    "composer.json",
+    "Dockerfile",
+    "docs/REFUNDS.md",
+    "app/Ledger/Ledger.php",
+    "app/Ledger/LedgerClosedException.php"
+  ],
+  "credit_policy": "Feature credit is improvement above the pristine baseline. Scope, runtime, PHPStan and test credit require at least one new core test to pass. Below half raw pass rate, feature credit is capped at half the category weight. Test credit counts reference mutants killed by the candidate's tests/run.php that the pristine tests did not already kill."
+}

@@ -3,6 +3,7 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -13,7 +14,8 @@ SCHEMA = json.loads((ROOT / "schema.json").read_text())
 
 
 def execute(command):
-    result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=90)
+    result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=90,
+                            env=dict(os.environ, XDEBUG_MODE="off"))
     return result.returncode, result.stdout, result.stderr
 
 
