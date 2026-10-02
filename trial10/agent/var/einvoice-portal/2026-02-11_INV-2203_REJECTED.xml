@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Portal response to INV-2203 (test build that rounded unit prices to cents first) -->
+<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
+  <svrl:failed-assert id="BR-CO-10" flag="fatal" location="/Invoice/cac:InvoiceLine[1]">
+    <svrl:text>[BR-CO-10] Invoice line net amount (38.91) must equal invoiced quantity (3) x item net price (12.974) = 38.922, rounded 38.92.</svrl:text>
+  </svrl:failed-assert>
+</svrl:schematron-output>

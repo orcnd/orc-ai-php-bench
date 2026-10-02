@@ -60,7 +60,7 @@ def static_errors(php, phar, workspace, temporary):
         raise RuntimeError("PHPStan infrastructure error: " + (error or output)[-1000:])
     report = json.loads(output)
     fingerprints = Counter()
-    for file, errors in report.get("files", {}).items():
+    for file, errors in (report.get("files") or {}).items():
         relative = str(Path(file).resolve().relative_to(workspace.resolve()))
         for message in errors["messages"]:
             # Lines may move; unchanged errors retain identity and multiplicity.

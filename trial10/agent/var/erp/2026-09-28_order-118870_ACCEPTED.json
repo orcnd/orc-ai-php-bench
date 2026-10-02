@@ -1,0 +1,5 @@
+{"order": "118870", "status": "accepted", "discount_amount": 119.75, "items": [
+  {"sku": "MUG-1", "row_total": 39.92, "discount_amount": 39.92},
+  {"sku": "MUG-2", "row_total": 39.92, "discount_amount": 39.91},
+  {"sku": "MUG-3", "row_total": 39.92, "discount_amount": 39.92}
+]}

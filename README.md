@@ -1,6 +1,7 @@
 # ORC PHP benchmark
 
-Hardest: Trial 006 (`trial6/`, crash consistency) and Trial 005 (`trial5/`,
+Issue triage with by-design traps: Trial 007/008/009 (`trial7/` to `trial9/`).
+Hardest engineering: Trial 006 (`trial6/`, crash consistency) and Trial 005 (`trial5/`,
 persistence, concurrency, ADR precedence). Before those, Trial 004 (`trial4/`, see `trial4/README.md`):
 unit-level cancellations with planted spec divergences, month-end ledger
 atomicity, migrated orders, int64-overflow-sized wholesale orders, PHP 7.4

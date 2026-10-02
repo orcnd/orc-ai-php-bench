@@ -1,0 +1,13 @@
+{
+  "id": "triage-fences-indirect-v8",
+  "target_php": "7.4",
+  "groups": {
+    "bugs": 45,
+    "fences": 35,
+    "runtime": 5,
+    "phpstan": 5,
+    "tests": 10
+  },
+  "protected_files": [],
+  "credit_policy": "bugs: improvement over baseline. fences: share of intentional behaviours preserved, only if at least one bug was fixed. Hidden suite runs on PHP 7.4."
+}
