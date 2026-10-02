@@ -1,1 +1,3 @@
-/vendor
+/vendor/
+/evaluator/phpstan-result.json
+__pycache__/

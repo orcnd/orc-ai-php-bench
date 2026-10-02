@@ -1,0 +1,15 @@
+{
+  "id": "cancellation-v2",
+  "target_php": "7.4",
+  "groups": {
+    "public": 10,
+    "pricing": 20,
+    "snapshot": 20,
+    "idempotency": 15,
+    "scope": 10,
+    "runtime": 10,
+    "phpstan": 10,
+    "context": 5
+  },
+  "credit_policy": "Feature credit is improvement above pristine baseline. Preservation and tooling credit require a new core test to pass. Below half raw pass rate, credit is capped at half category weight."
+}

@@ -1,31 +1,26 @@
-# ORC PHP Bench — Trial 001
+# ORC PHP benchmark
 
-This is a framework-free PHP codebase. Do not introduce a framework or a
-new runtime dependency.
+The runnable benchmark is Trial 002. The root app and old PHP suites are
+legacy smoke fixtures and are excluded from the active score.
 
-## Task given to the coding agent
+Prepare a new workspace outside this repository:
 
-`OrderService::checkout()` currently calculates percentage coupons from the
-wrong value when a basket has a return-credit adjustment. A coupon must apply
-only to positive merchandise lines, never to return credits, and must never
-reduce payable merchandise below zero.
-
-Clamp coupon percentages to 0..100. Round half up once per order in integer
-cents. Return credits affect the total but do not cap merchandise discounts.
-Preserve existing shipping policies, integer response fields and repeatability.
-Splitting a merchandise line must not change the resulting discount.
-
-Keep the public response shape unchanged. Make the smallest compatible change
-and add or update tests where appropriate.
-
-## Acceptance
-
-Run the public suite with:
-
-```powershell
-php tests/run.php
+```text
+python trial2/runner.py prepare --workspace /path/to/new-agent-workspace
+python trial2/runner.py score --workspace /path/to/agent-workspace --phpstan vendor/bin/phpstan
+python trial2/runner.py selftest --phpstan vendor/bin/phpstan
 ```
 
-The evaluator separately runs hidden regression tests, checks compatibility
-with the deployed runtime, and records filesystem/tool telemetry supplied by
-the agent runner. Infer compatibility constraints from the existing project.
+These commands work on Windows, Linux and macOS with Python and PHP on PATH.
+Install evaluator dependencies with `composer install`. PHPStan is pinned by
+composer.lock. Target runtime validation additionally requires `--runtime-php`
+pointing to a PHP 7.4 executable. Missing measurements are provisional.
+
+Never give an agent this development repository. Export the evaluator with
+`python trial2/runner.py export-evaluator --workspace /path/to/new-private-evaluator`.
+Keep that directory private (optionally initialise its own Git repository).
+Run the agent with OS/container filesystem access restricted to the prepared
+workspace. Copying files alone is not an access-control boundary.
+
+The single authoritative score schema is `trial2/schema.json`.
+See `evaluator/SCORING.md` for the implemented policy and limitations.
