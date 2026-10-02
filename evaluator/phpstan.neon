@@ -1,6 +1,6 @@
 # Evaluator-only file: do not mount this directory in the agent workspace.
 parameters:
-    level: 7
+    level: max
     paths:
         - ../app
     phpVersion: 70400

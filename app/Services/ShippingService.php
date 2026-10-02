@@ -12,7 +12,6 @@ final class ShippingService
     {
         $fee = 500;
 
-        // Existing commercial contract: white-glove VIP shipping costs more.
         if ($customer->isVip()) {
             return 1250;
         }
