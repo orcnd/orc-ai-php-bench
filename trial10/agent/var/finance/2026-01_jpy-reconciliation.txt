@@ -1,7 +1,0 @@
-Reconciliation JPY payouts, January 2026 (auditor follow-up)
-
-The 2025 payout run rounded every EUR->JPY conversion silently; 3,418
-payouts deviate from the bank statement by up to 1 JPY and nobody can say
-which rounding was intended. Auditor requirement: every conversion that
-needs rounding must state it explicitly (Currency::convertRounded) so the
-rounding is visible in code review; plain convert() must refuse.

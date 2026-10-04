@@ -1,0 +1,21 @@
+{
+  "id": "rolling-upgrade-v11",
+  "groups": {
+    "compat": 25,
+    "messages": 20,
+    "migration": 30,
+    "lossless": 15,
+    "runtime": 5,
+    "phpstan": 5
+  },
+  "features": [
+    "compat",
+    "messages",
+    "migration",
+    "lossless"
+  ],
+  "protected": [
+    "legacy",
+    "app/Storage"
+  ]
+}

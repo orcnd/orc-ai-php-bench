@@ -1,4 +1,0 @@
-{"order": "100231", "status": "rejected", "errors": [
-  {"code": "ROW_DISCOUNT_MISMATCH", "item": 2, "sku": "TSHIRT-M",
-   "message": "Row discount 39.92 does not match recomputed 39.91 (order discount 119.75 distributed with carry)"}
-]}

@@ -1,0 +1,68 @@
+[
+ {
+  "id": "pickup-ignored",
+  "file": "app/Tax/TaxLocationResolver.php",
+  "old": "if ($cart->needsShipping() && $cart->shippingMethod === 'local_pickup') {",
+  "new": "if (false) {"
+ },
+ {
+  "id": "pickup-bypasses-filter",
+  "file": "app/Tax/TaxLocationResolver.php",
+  "old": "if ($cart->needsShipping() && $cart->shippingMethod === 'local_pickup') {",
+  "new": "if ($cart->shippingMethod === 'local_pickup') {"
+ },
+ {
+  "id": "cache-by-method",
+  "file": "app/Shipping/ShippingCalculator.php",
+  "old": "$key = sha1((string) json_encode([$cart->shippingMethod, $cart->shipping->country, $cart->shipping->postcode, $package]));",
+  "new": "$key = $cart->shippingMethod;"
+ },
+ {
+  "id": "cache-ignores-address",
+  "file": "app/Shipping/ShippingCalculator.php",
+  "old": "$key = sha1((string) json_encode([$cart->shippingMethod, $cart->shipping->country, $cart->shipping->postcode, $package]));",
+  "new": "$key = sha1((string) json_encode([$cart->shippingMethod, $package]));"
+ },
+ {
+  "id": "no-cache",
+  "file": "app/Shipping/ShippingCalculator.php",
+  "old": "if (!isset($this->cache[$key])) {",
+  "new": "if (true) {"
+ },
+ {
+  "id": "sepa-code-lost",
+  "file": "app/Payments/Gateways/SepaGateway.php",
+  "old": "$response['reason_code'] ?? 'unknown'",
+  "new": "'unknown'"
+ },
+ {
+  "id": "giftcard-code-lost",
+  "file": "app/Payments/Gateways/GiftCardGateway.php",
+  "old": "$response['status_code'] ?? 'unknown'",
+  "new": "'unknown'"
+ },
+ {
+  "id": "stripe-code-lost",
+  "file": "app/Payments/Gateways/StripeGateway.php",
+  "old": "$response['decline_code'] ?? 'unknown'",
+  "new": "'unknown'"
+ },
+ {
+  "id": "coupon-utc",
+  "file": "app/Coupons/CouponValidator.php",
+  "old": "$this->clock->now()->setTimezone(new \\DateTimeZone($this->storeTimezone))",
+  "new": "$this->clock->now()"
+ },
+ {
+  "id": "csv-no-neutralise",
+  "file": "app/Export/OrderCsv.php",
+  "old": "return $value !== '' && strpos(\"=+-@\\t\\r\", $value[0]) !== false ? \"'\" . $value : $value;",
+  "new": "return $value;"
+ },
+ {
+  "id": "csv-quotes-only",
+  "file": "app/Export/OrderCsv.php",
+  "old": "if (strpbrk($value, \",\\\"\\r\\n\") === false) {",
+  "new": "if (strpos($value, '\"') === false) {"
+ }
+]

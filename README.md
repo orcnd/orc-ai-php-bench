@@ -1,6 +1,13 @@
 # ORC PHP benchmark
 
-Issue triage with by-design traps: Trial 007/008/009 (`trial7/` to `trial9/`).
+Active trials: 002, 004, 005, 006, 011, 012, 015, 016 (see RESULTS.md,
+"Active benchmark after round 2"). Saturated trials (003, 007, 008, 009, 010, 013, 014) were
+moved to `retired/`; their runners still work from there.
+
+Issue triage with by-design traps: Trial 007-010 (`trial7/` to `trial10/`).
+System-level trials 011-014: rolling upgrade (`trial11/`), event ordering
+(`trial12/`), bug localisation with minimal-patch scoring (`trial13/`) and
+property/metamorphic testing (`trial14/`); shared schema-driven `runner.py`.
 Hardest engineering: Trial 006 (`trial6/`, crash consistency) and Trial 005 (`trial5/`,
 persistence, concurrency, ADR precedence). Before those, Trial 004 (`trial4/`, see `trial4/README.md`):
 unit-level cancellations with planted spec divergences, month-end ledger

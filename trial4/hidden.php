@@ -521,6 +521,91 @@ check('idempotency', 'ledger-close-zero-refund-ok', function (): void {
     same(response(1, 0), $k->cancellations->cancel(1, ['a'], 'r1'));
 });
 
+// ---------- randomised mixed operations (state machine vs. oracle) ----------
+check('idempotency', 'randomised-mixed-operations', function (): void {
+    mt_srand(4242);
+    for ($round = 0; $round < 80; $round++) {
+        $promo = [['percent', mt_rand(0, 100)], ['fixed', mt_rand(0, 9000)], null][mt_rand(0, 2)];
+        $k = kernel($promo);
+        $orders = [];
+        foreach ([1, 2] as $orderId) {
+            $lines = [];
+            for ($i = 0, $n = mt_rand(1, 4); $i < $n; $i++) {
+                $lines[] = ['m' . $i, 'merch', mt_rand(0, 3000), mt_rand(1, 5)];
+            }
+            if (mt_rand(0, 1)) { $lines[] = ['cr', 'credit', -mt_rand(1, 5000)]; }
+            if (mt_rand(0, 1)) { $lines[] = ['sh', 'shipping', mt_rand(1, 900)]; }
+            place($k, $orderId, $lines, $promo);
+            $orders[$orderId] = ['o' => oracle($lines, $promo), 'ids' => allIds($lines), 'cancelled' => [], 'keys' => [], 'entries' => 0];
+        }
+        $closed = false;
+        for ($step = 0; $step < 14; $step++) {
+            $orderId = mt_rand(1, 2);
+            $state = &$orders[$orderId];
+            $o = $state['o'];
+            $op = mt_rand(0, 9);
+            if ($op === 0) {
+                $closed ? $k->ledger->reopen() : $k->ledger->close();
+                $closed = !$closed;
+                unset($state);
+                continue;
+            }
+            $key = 'k' . mt_rand(0, 5); // keys collide across orders and steps on purpose
+            $request = [];
+            foreach ($state['ids'] as $id) {
+                if (mt_rand(0, 2) > 0) { continue; }
+                $left = isset($o['merch'][$id]) ? $o['qty'][$id] - ($state['cancelled'][$id] ?? 0) : 0;
+                if ($left > 0 && mt_rand(0, 1)) {
+                    $request[$id] = mt_rand(1, $left + ($op === 1 ? 1 : 0)); // op 1 may over-cancel
+                } else {
+                    $request[] = $id;
+                }
+            }
+            if ($op === 2) { $request[] = 'ghost'; }
+            if ($request === []) { $request[] = $state['ids'][0]; }
+            if (isset($state['keys'][$key])) {
+                same($state['keys'][$key], $k->cancellations->cancel($orderId, $request, $key));
+                unset($state);
+                continue;
+            }
+            $valid = !in_array('ghost', $request, true);
+            foreach ($request as $id => $units) {
+                if (is_string($id) && $units > $o['qty'][$id] - ($state['cancelled'][$id] ?? 0)) { $valid = false; }
+            }
+            if (!$valid) {
+                throwsInvalid(function () use ($k, $orderId, $request, $key): void { $k->cancellations->cancel($orderId, $request, $key); });
+                unset($state);
+                continue;
+            }
+            $after = $state['cancelled'];
+            foreach ($request as $id => $value) {
+                $line = is_int($id) ? $value : $id;
+                $after[$line] = is_int($id) ? $o['qty'][$line] : ($after[$line] ?? 0) + $value;
+            }
+            $amount = entitlement($o, $after) - entitlement($o, $state['cancelled']);
+            if ($closed && $amount > 0) {
+                try {
+                    $k->cancellations->cancel($orderId, $request, $key);
+                    throw new RuntimeException('expected LedgerClosedException');
+                } catch (App\Ledger\LedgerClosedException $expected) {
+                }
+                unset($state);
+                continue;
+            }
+            same(response($orderId, $amount), $k->cancellations->cancel($orderId, $request, $key));
+            $state['cancelled'] = $after;
+            $state['keys'][$key] = response($orderId, $amount);
+            $state['entries'] += $amount > 0 ? 1 : 0;
+            unset($state);
+        }
+        if ($closed) { $k->ledger->reopen(); }
+        foreach ($orders as $orderId => $state) {
+            same(entitlement($state['o'], $state['cancelled']), ledgerSum($k, $orderId));
+            same($state['entries'], count(array_filter($k->ledger->entries(), function (array $e) use ($orderId): bool { return $e['order_id'] === $orderId; })));
+        }
+    }
+});
+
 // ---------- migrated v2 orders ----------
 check('snapshot', 'migrated-allocations', function (): void {
     $k = kernel(null);

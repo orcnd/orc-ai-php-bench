@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+// What CI runs on every pull request (PHP 7.4 runner). A PR is only reviewed when this is green.
+declare(strict_types=1);
+$root = dirname(__DIR__);
+$php = escapeshellarg(PHP_BINARY);
+$failed = false;
+$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root . '/app'));
+foreach (array_merge(iterator_to_array($files), glob($root . '/tests/{,cases/}*.php', GLOB_BRACE) ?: []) as $file) {
+    if (substr((string) $file, -4) === '.php') {
+        exec($php . ' -l ' . escapeshellarg((string) $file) . ' 2>&1', $out, $code);
+        if ($code !== 0) {
+            echo "lint failed: $file\n";
+            $failed = true;
+        }
+    }
+}
+echo "== phpstan (level max)\n";
+passthru($php . ' -d memory_limit=1G ' . escapeshellarg($root . '/tools/phpstan.phar') . ' analyse --no-progress -c ' . escapeshellarg($root . '/phpstan.neon'), $code);
+$failed = $failed || $code !== 0;
+echo "== tests\n";
+passthru($php . ' ' . escapeshellarg($root . '/tests/run.php'), $code);
+$failed = $failed || $code !== 0;
+echo $failed ? "CI FAILED\n" : "CI OK\n";
+exit($failed ? 1 : 0);

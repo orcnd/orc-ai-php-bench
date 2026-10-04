@@ -1,0 +1,26 @@
+[
+ {
+  "id": "position-tie-break",
+  "file": "app/Money/Allocation.php",
+  "old": "return $a[0] !== $b[0] ? $b[0] <=> $a[0] : strcmp($a[1], $b[1]);",
+  "new": "return $b[0] <=> $a[0];"
+ },
+ {
+  "id": "segment-rounding",
+  "file": "app/Money/Allocation.php",
+  "old": "return self::cumulative($amount, $periodStart, $to, $periodEnd) - self::cumulative($amount, $periodStart, $from, $periodEnd);",
+  "new": "return intdiv(2 * $amount * self::days($from, $to) + self::days($periodStart, $periodEnd), 2 * self::days($periodStart, $periodEnd));"
+ },
+ {
+  "id": "installments-ascending",
+  "file": "app/Money/Allocation.php",
+  "old": "$parts[] = $base + ($i < $extra ? 1 : 0);",
+  "new": "$parts[] = $base + ($i >= $count - $extra ? 1 : 0);"
+ },
+ {
+  "id": "negative-floor",
+  "file": "app/Money/Allocation.php",
+  "old": "$magnitude = abs($total);",
+  "new": "$magnitude = $total < 0 ? 0 : $total;"
+ }
+]

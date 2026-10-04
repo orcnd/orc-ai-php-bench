@@ -1,6 +1,0 @@
-Finance note, March 2025 (release 2.9 "round tax per unit")
-
-Refunding the units of a line one by one refunded more VAT than was
-charged: line 2 x 65.835 -> charged 131.67, refunded 65.84 + 65.84 = 131.68.
-1,912 refunds affected, VAT return corrected manually. Release 2.9.1 went
-back to: compute line tax once, give the leftover cent to the first unit(s).

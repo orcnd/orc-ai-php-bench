@@ -1,0 +1,4 @@
+[
+ {"id": "revert-root-cause", "file": "app/Orders/LegacyOrderHydrator.php", "old": "$unit, $position['total'], ", "new": "$unit, $unit * $position['qty'], "},
+ {"id": "rounded-unit", "file": "app/Orders/LegacyOrderHydrator.php", "old": "$unit, $position['total'], ", "new": "$unit, (int) round($position['total'] / $position['qty']) * $position['qty'], "}
+]

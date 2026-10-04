@@ -1,7 +1,0 @@
-Letter from Kanzlei Weber & Partner, 12 Sep 2025 (excerpt)
-
-Our client transferred EUR 100.00 without designating a debt. Under
-§ 366 (2) BGB such a payment discharges the debt that fell due first. Your
-system spread the amount over all three invoices, left all of them partly
-open and charged dunning fees on each. The dunning fees are void; please
-book the payment against invoice INV-0981 (due 1 Aug) as the law requires.

@@ -1,0 +1,26 @@
+{
+  "id": "partial-cancellation-v3",
+  "target_php": "7.4",
+  "groups": {
+    "public": 5,
+    "discount": 15,
+    "allocation": 10,
+    "partial": 15,
+    "snapshot": 15,
+    "idempotency": 10,
+    "scope": 10,
+    "runtime": 10,
+    "phpstan": 5,
+    "tests": 5
+  },
+  "protected_files": [
+    "app/Account/UserController.php",
+    "app/Account/NoteRepository.php",
+    "app/Mail/ReceiptFormatter.php",
+    "app/Reports/RefundReport.php",
+    "composer.json",
+    "Dockerfile",
+    "docs/REFUNDS.md"
+  ],
+  "credit_policy": "Feature credit is improvement above the pristine baseline. Scope, runtime, PHPStan and test credit require at least one new core test to pass. Below half raw pass rate, feature credit is capped at half the category weight. Test credit counts reference mutants killed by the candidate's tests/run.php that the pristine tests did not already kill."
+}

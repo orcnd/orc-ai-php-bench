@@ -1,0 +1,9 @@
+{
+  "id": "maintainer-review-v15",
+  "groups": {"functional": 25, "completeness": 20, "invariants": 15, "ci": 15, "conventions": 10, "tests": 10, "discipline": 5},
+  "features": ["functional", "completeness"],
+  "preserve": ["invariants"],
+  "protected": [],
+  "ci_files": ["bin/ci", "phpstan.neon", "tools/phpstan.phar", "tests/run.php", "bootstrap.php"],
+  "scope_allowed": ["app/Tax/", "app/Shipping/ShippingCalculator.php", "app/Payments/Gateways/", "app/Payments/Decline", "app/Coupons/CouponValidator.php", "app/Export/"]
+}

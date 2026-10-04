@@ -1,0 +1,56 @@
+[
+ {
+  "id": "v2-only-document",
+  "file": "app/Customers/CustomerRepository.php",
+  "old": "            'name' => $customer->name, 'address' => $address, 'monthly_fee' => $customer->feeCents / 100,\n        ]);",
+  "new": "            'name' => $customer->name, 'street' => $customer->street, 'fee_cents' => $customer->feeCents,\n        ]);"
+ },
+ {
+  "id": "stale-sidecar-trusted",
+  "file": "app/Customers/CustomerRepository.php",
+  "old": "if (($side['address_from'] ?? null) === $address) {",
+  "new": "if (isset($side['street'])) {"
+ },
+ {
+  "id": "fee-truncated",
+  "file": "app/Customers/CustomerRepository.php",
+  "old": "(int) round((float) $main['monthly_fee'] * 100)",
+  "new": "(int) ((float) $main['monthly_fee'] * 100)"
+ },
+ {
+  "id": "new-message-type",
+  "file": "app/Billing/InvoiceRequester.php",
+  "old": "return ['type' => 'invoice.requested', 'id'",
+  "new": "return ['type' => 'invoice.requested.v2', 'id'"
+ },
+ {
+  "id": "no-legacy-fee-in-message",
+  "file": "app/Billing/InvoiceRequester.php",
+  "old": "'fee' => $customer->feeCents / 100, ",
+  "new": ""
+ },
+ {
+  "id": "worker-not-idempotent",
+  "file": "app/Billing/InvoiceWorker.php",
+  "old": "if ($this->store->get($key) !== null) {\n            return;\n        }",
+  "new": ""
+ },
+ {
+  "id": "v1-invoice-currency-default",
+  "file": "app/Billing/Invoices.php",
+  "old": ": (new CustomerRepository($this->store))->find((int) $data['customer'])->currency;",
+  "new": ": 'EUR';"
+ },
+ {
+  "id": "migration-resets-currency",
+  "file": "app/Customers/CustomerRepository.php",
+  "old": "'currency' => is_array($side) ? (string) ($side['currency'] ?? 'EUR') : 'EUR',",
+  "new": "'currency' => 'EUR',"
+ },
+ {
+  "id": "save-recomposes-address",
+  "file": "app/Customers/CustomerRepository.php",
+  "old": "                $address = $current['address'];",
+  "new": "                $address = $address;"
+ }
+]

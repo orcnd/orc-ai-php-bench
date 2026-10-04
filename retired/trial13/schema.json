@@ -1,0 +1,8 @@
+{
+  "id": "localization-maze-v13",
+  "groups": {"fix": 45, "regression": 25, "minimal": 20, "runtime": 5, "phpstan": 5},
+  "features": ["fix"],
+  "preserve": ["regression"],
+  "protected": [],
+  "minimal": {"weight_group": "minimal", "root_cause": "app/Orders/LegacyOrderHydrator.php", "max_files": 1, "max_lines": 6}
+}

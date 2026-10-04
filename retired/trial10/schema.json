@@ -1,0 +1,14 @@
+{
+  "id": "triage-fences-validators-v10",
+  "target_php": "7.4",
+  "groups": {
+    "bugs": 30,
+    "features": 20,
+    "fences": 35,
+    "runtime": 5,
+    "phpstan": 5,
+    "tests": 5
+  },
+  "protected_files": [],
+  "credit_policy": "bugs and features: improvement over baseline. fences: share preserved, only if a bug or feature gained. Hidden suite on PHP 7.4."
+}

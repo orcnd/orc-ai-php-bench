@@ -1,3 +1,0 @@
-{"Bucket": "adress-prod-eu1", "ObjectLockEnabled": "Enabled",
- "Rule": {"DefaultRetention": {"Mode": "COMPLIANCE", "Years": 10}},
- "Comment": "ADRESS - Agency Data Retention & Export Storage Service. Bucket name and adress_ref format are referenced by the DMS, the auditors' tooling and 10 years of archived records; never rename."}

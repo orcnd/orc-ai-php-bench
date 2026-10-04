@@ -1,0 +1,38 @@
+[
+ {
+  "id": "no-dedupe",
+  "file": "app/Payments/OrderProjector.php",
+  "old": "        if (isset($this->seen[$id])) {\n            return;\n        }\n",
+  "new": ""
+ },
+ {
+  "id": "refund-before-capture",
+  "file": "app/Payments/OrderProjector.php",
+  "old": "                if ($f['captured'] > 0) {\n                    $this->issue(",
+  "new": "                if (true) {\n                    $this->issue("
+ },
+ {
+  "id": "no-void-on-cancel",
+  "file": "app/Payments/OrderProjector.php",
+  "old": "                foreach ($f['auths'] as $auth => $amount) {\n                    $this->void($order, $auth, $amount);\n                }\n                return;",
+  "new": "                return;"
+ },
+ {
+  "id": "commands-not-per-order",
+  "file": "app/Payments/OrderProjector.php",
+  "old": "$this->send($order . ':refund:' . $refund,",
+  "new": "$this->send('refund:' . $refund,"
+ },
+ {
+  "id": "late-auth-not-voided",
+  "file": "app/Payments/OrderProjector.php",
+  "old": "if (($f['cancelled'] || $f['captured'] > 0) && !isset($f['capturedAuths'][$auth])) {",
+  "new": "if ($f['cancelled']) {"
+ },
+ {
+  "id": "refunded-counts-requests",
+  "file": "app/Payments/OrderProjector.php",
+  "old": "                $f['refunds'][$refund] = (int) $event['amount'];",
+  "new": "                $f['refunds'][$refund] = (int) $event['amount'];\n                $f['refunded'] += (int) $event['amount'];"
+ }
+]

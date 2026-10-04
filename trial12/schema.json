@@ -1,0 +1,20 @@
+{
+  "id": "event-ordering-v12",
+  "groups": {
+    "inorder": 10,
+    "shuffled": 30,
+    "duplicated": 25,
+    "interleaved": 10,
+    "volume": 15,
+    "runtime": 5,
+    "phpstan": 5
+  },
+  "features": [
+    "inorder",
+    "shuffled",
+    "duplicated",
+    "interleaved",
+    "volume"
+  ],
+  "protected": []
+}

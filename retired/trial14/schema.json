@@ -1,0 +1,6 @@
+{
+  "id": "metamorphic-allocation-v14",
+  "groups": {"allocate": 50, "prorate": 30, "installments": 10, "runtime": 5, "phpstan": 5},
+  "features": ["allocate", "prorate", "installments"],
+  "protected": []
+}

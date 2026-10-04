@@ -1,4 +1,0 @@
-Reconciliation web shop vs. till VAT, August 2026 (finance)
-Differences: none (0 of 18,402 lines).
-Previous run with web shop release 3.0.x: 211 lines differed by +0.01 VAT
-(web shop higher), all on lines whose exact VAT ends in .5 cent.

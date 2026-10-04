@@ -1,9 +1,0 @@
-Tax audit (Betriebsprüfung) 2021-2023, findings, December 2024
-
-Finding 2: Invoice numbers INV-0412 to INV-0415 and INV-0790 are missing
-from the sequence. Deleted invoices must be documented; gaps in the number
-sequence are an indication of incomplete records (§ 14 UStG, GoBD 3.2).
-
-Finding 3: Journal entries 5512 and 6020 were changed after posting without
-a record of the original amount (GoBD 3.3, immutability). Corrections must
-be booked as reversing entries.

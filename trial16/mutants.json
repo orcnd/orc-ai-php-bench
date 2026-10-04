@@ -1,0 +1,146 @@
+[
+ {
+  "id": "c01-no-skip",
+  "file": "app/Text/Tokenizer.php",
+  "old": " && $m[0] !== ''",
+  "new": ""
+ },
+ {
+  "id": "c02-empty-check",
+  "file": "app/Config/Merger.php",
+  "old": "if ($value === null) {",
+  "new": "if (empty($value)) {"
+ },
+ {
+  "id": "c03-overwrite",
+  "file": "app/Workflow/CorrelationStore.php",
+  "old": "if (!isset($this->byMessage[$messageKey][$subscriptionKey])) {",
+  "new": "if (true) {\n            $this->byMessage[$messageKey] = [];"
+ },
+ {
+  "id": "c04-contract-changed",
+  "file": "app/Versioning/Version.php",
+  "old": "throw new InvalidVersion('Too many components: ' . $text);",
+  "new": "return false;"
+ },
+ {
+  "id": "c05-xdg-overrides-legacy",
+  "file": "app/Config/PathResolver.php",
+  "old": " || $exists($legacy)",
+  "new": ""
+ },
+ {
+  "id": "c06-always-error",
+  "file": "app/Schema/Validator.php",
+  "old": "if ($strict) {",
+  "new": "if (true) {"
+ },
+ {
+  "id": "c07-prepend-challenge",
+  "file": "app/Auth/DiscoveryUrls.php",
+  "old": "            return [$challengeMetadataUrl];\n        }",
+  "new": "        }"
+ },
+ {
+  "id": "c08-duplicates",
+  "file": "app/Search/TagIndex.php",
+  "old": "$hits[$id] = $this->articles[$id];",
+  "new": "$hits[] = $this->articles[$id];"
+ },
+ {
+  "id": "c09-strip-in-verbatim",
+  "file": "app/Export/TranscriptExporter.php",
+  "old": "        if ($mode === self::VERBATIM) {\n            return $text;",
+  "new": "        if ($mode === self::VERBATIM) {\n            return str_replace(\"\u00ac\", '', $text);"
+ },
+ {
+  "id": "c10-rewrites-keywords",
+  "file": "app/Rules/CallRewriter.php",
+  "old": "        if ($args === [] || count($args) > 2) {",
+  "new": "        if ($args === []) {"
+ },
+ {
+  "id": "c11-ignores-strings",
+  "file": "app/Notebook/Suppression.php",
+  "old": "            if ($c === '\"' || $c === \"'\") {\n                $quote = $c;\n                continue;\n            }",
+  "new": ""
+ },
+ {
+  "id": "c12-computes-all-rows",
+  "file": "app/Query/TopN.php",
+  "old": "        foreach (array_slice($keyed, 0, $limit) as [$key, , $row]) {",
+  "new": "        foreach ($keyed as [$key, , $row]) {"
+ },
+ {
+  "id": "c13-always-object-level",
+  "file": "app/Validation/EntityValidator.php",
+  "old": "if ($errors === [] && method_exists($entity, 'validate')) {",
+  "new": "if (method_exists($entity, 'validate')) {"
+ },
+ {
+  "id": "c14-restore-unchecked",
+  "file": "app/Catalog/ProductRepository.php",
+  "old": "if ($product->isTrashed() && $this->findByBarcode($product->barcode) !== null) {",
+  "new": "if (false) {"
+ },
+ {
+  "id": "c15-one-file-left",
+  "file": "app/Billing/CreditsService.php",
+  "old": "?Clock $clock = null",
+  "new": "Clock $clock = null"
+ },
+ {
+  "id": "c16-ignores-length",
+  "file": "app/Routing/OriginValidator.php",
+  "old": " && $length <= $maxLength",
+  "new": ""
+ },
+ {
+  "id": "c16-absent-means-any",
+  "file": "app/Routing/OriginValidator.php",
+  "old": "$roa['maxLength'] ?? $roaLength",
+  "new": "$roa['maxLength'] ?? strlen($roaAddress) * 8"
+ },
+ {
+  "id": "c16-as0-matches",
+  "file": "app/Routing/OriginValidator.php",
+  "old": "$roa['asn'] !== 0 && ",
+  "new": ""
+ },
+ {
+  "id": "c17-ignore-validates-first",
+  "file": "app/Storage/TableWriter.php",
+  "old": "if ($mode === 'ignore' && $exists) {\n            return 0; // Spark: the save is a no-op; the data is not even looked at\n        }\n        foreach ($rows as $i => $row) {\n            if (!isset($row['id'])) {\n                throw new InvalidRow('Row ' . $i . ' has no id');\n            }\n        }",
+  "new": "foreach ($rows as $i => $row) {\n            if (!isset($row['id'])) {\n                throw new InvalidRow('Row ' . $i . ' has no id');\n            }\n        }\n        if ($mode === 'ignore' && $exists) {\n            return 0;\n        }"
+ },
+ {
+  "id": "c18-ascii-lowercase",
+  "file": "app/Archive/SubjectIndex.php",
+  "old": "mb_strtolower((string) preg_replace('/\\s+/u', ' ', trim($title)), 'UTF-8')",
+  "new": "strtolower((string) preg_replace('/\\s+/', ' ', trim($title)))"
+ },
+ {
+  "id": "c18-global-key",
+  "file": "app/Archive/SubjectIndex.php",
+  "old": "$key = $collectionId . \"\\0\" . $category . \"\\0\" . $normal;",
+  "new": "$key = $category . \"\\0\" . $normal;"
+ },
+ {
+  "id": "c19-no-skip-propagation",
+  "file": "app/Workflow/Graph.php",
+  "old": "$queue[] = [$to, isset($taken[$to])];",
+  "new": "if (isset($taken[$to])) {\n                        $queue[] = [$to, true];\n                    }"
+ },
+ {
+  "id": "c19-any-predecessor",
+  "file": "app/Workflow/Graph.php",
+  "old": "if (--$unresolved[$to] === 0) {",
+  "new": "if (--$unresolved[$to] === 0 || isset($taken[$to]) && !in_array($to, $ran, true)) {"
+ },
+ {
+  "id": "c20-no-append",
+  "file": "app/Shell/CommandLine.php",
+  "old": "$append = $i + 1 < $length && $line[$i + 1] === '>';",
+  "new": "$append = false;"
+ }
+]
